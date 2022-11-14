@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import compare from '../../helpers/funcHelp';
 import { getMovies } from '../../services/moviesFromServer';
+import { ListGroup } from '../listGroup/listGroup';
 import { TableContent } from '../tableContent/tableContent';
+import './parentTable.css';
 
 let moviesFromServer = getMovies();
 
@@ -9,6 +11,8 @@ export const ParentTable = () => {
   let [movies, setMovies] = useState(moviesFromServer).sort((a, b) =>
     compare(a, b)
   );
+
+  let [filterValue,setFilterValue] = useState("All");
 
   const handleIsLike = (id, isLike) => {
     let editedMovieId = movies.find((m) => m.id === id);
@@ -33,8 +37,25 @@ export const ParentTable = () => {
     setMovies(listOFmoviesWithoutTheDeleted);
   };
 
+  const moviesDataFilter = (genre) =>{
+    setFilterValue(genre);
+    let allMovies = getMovies();
+    if(genre === "Action" || genre === "Drama" || genre === "Comedy")
+    {
+       let mFilterArr = allMovies.filter((m) => m.genre === genre).sort((a, b) => compare(a, b));
+        setMovies(mFilterArr);
+        
+    }
+    else{
+      setMovies(allMovies);
+    }
+  }
+
+
+
   return (
-    <div>
+    <div className='tableContainer'>
+      <ListGroup  moviesFilter={moviesDataFilter} filterValue={filterValue} ></ListGroup>
       <TableContent
         moviesArr={movies}
         handleLike={handleIsLike}

@@ -2,10 +2,11 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import './tableConten.css';
 
 export const TableContent = ({ moviesArr, handleLike, handleDelete }) => {
   return (
-    <table className='table table-success table-striped'>
+    <table className='table tableData'>
       <thead>
         <tr>
           <th scope='col'>#</th>
